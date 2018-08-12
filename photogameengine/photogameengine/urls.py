@@ -27,5 +27,5 @@ from rest_framework import routers
 urlpatterns = [
     url(r'^accounts/',include('accounts.urls')),
     # url(r'^snippets/',include('snippets.urls')),
-    url(r'^api-auth/',include('rest_framework.urls',namespace='rest_framework')),
+    url('rest-auth/', include('rest_auth.urls'))
 ]
