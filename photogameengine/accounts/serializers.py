@@ -7,9 +7,16 @@ from django.conf import settings
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfileRegistrationManager
 
+
+
+# Create your views here.
+"""
+This 
+"""
 user = get_user_model()
+user_registration = UserProfileRegistrationManager()
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -67,8 +74,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             'password': validated_data.get('password')           
         }
         is_active = True
-        user = UserProfile.objects.create_user_profile(
+       
+        user = user_registration.create_user_profile(
                 data=user_data,
-                is_active=is_active            
+                is_active=is_active 
             )
         return validated_data

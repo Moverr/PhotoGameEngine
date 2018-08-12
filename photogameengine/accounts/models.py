@@ -13,9 +13,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from django.contrib.auth.tokens import default_token_generator
 
-from base import utils as base_utils
-from base import models as base_models
-
 User = get_user_model()
 
 token_generator = default_token_generator
@@ -38,7 +35,7 @@ class Verification(models.Model):
         abstract = True
 
 
-class UserProfileRegistrationManager(models.Manager):
+class UserRegistrationModel(models.Manager):
     """
     Custom manager for ``UserProfile`` model.
 
@@ -64,8 +61,7 @@ class UserProfileRegistrationManager(models.Manager):
 
         user_profile = self.create_profile(user)
 
-       
-
+      
         return user
 
     def create_profile(self, user):
@@ -85,6 +81,7 @@ class UserProfileRegistrationManager(models.Manager):
         )
 
         return profile
+
 
     @transaction.atomic
     def delete_expired_users(self):
