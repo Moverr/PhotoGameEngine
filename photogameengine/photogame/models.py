@@ -4,11 +4,12 @@ from enum import Enum
 
 from django.db import models
 
-from photogame.utils.enums import Categories,VoteTypes
+from photogame.utils.enums import Categories,VoteStatus
 
 
 # Create your models here.
-class Picture(models.Model):    
+class Picture(models.Model): 
+    file = models.FileField(blank=False, null=True)   
     url = models.CharField(max_length=255)
     caption = models.CharField(max_length=255)
     description = models.TextField('description')
@@ -20,6 +21,6 @@ class votes(models.Model):
     picture = models.ForeignKey(Picture,on_delete=models.CASCADE)
     voter = models.ForeignKey('auth.User',related_name='voters',on_delete=models.CASCADE)
     count = models.IntegerField()
-    votetype = models.CharField(max_length=255, choices=[ (tag,tag.value) for tag in VoteTypes] )
+    status = models.CharField(max_length=255, choices=[ (tag,tag.value) for tag in VoteStatus] )
 
 

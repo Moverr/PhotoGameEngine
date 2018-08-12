@@ -26,6 +26,7 @@ from rest_framework import routers
 
 urlpatterns = [
     url(r'^accounts/',include('accounts.urls')),
+    url(r'^photogame/',include('photogame.urls')),
     # url(r'^snippets/',include('snippets.urls')),
     url('rest-auth/', include('rest_auth.urls'))
 ]

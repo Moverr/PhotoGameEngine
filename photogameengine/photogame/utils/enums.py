@@ -8,6 +8,6 @@ class Categories(Enum):
     SPORTS = "Sports"
     FAMILY = "Family"
 
-class VoteTypes(Enum):
+class VoteStatus(Enum):
     UPVOTE = 1
     DOWNVOTE = 0
