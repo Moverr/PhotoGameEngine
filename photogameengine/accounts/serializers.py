@@ -7,17 +7,8 @@ from django.conf import settings
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
+from .models import UserProfile
 
-from base import utils as base_utils
-from accounts.models import UserProfile
-from teams.models import TeamInvitation
-from teams.api.serializers import TeamSerializer
-
-
-# Create your views here.
-"""
-This 
-"""
 user = get_user_model()
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -83,9 +74,3 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
                 send_email=True
             )
         return validated_data
-
-
-
-
-    
-  
