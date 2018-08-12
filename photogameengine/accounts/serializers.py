@@ -1,28 +1,20 @@
-import base64
-from django.contrib.auth import get_user_model
-from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth.tokens import default_token_generator
-from django.db.models import Q
-from django.conf import settings
+from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User
-from .models import UserRegistrationModel
 
 
-
-# Create your views here.
-"""
-This 
-"""
-user = get_user_model()
-user_registration = UserRegistrationModel()
-
-class UserRegistrationSerializer(serializers.HyperlinkedModelSerializer):
-  
-    def create(self,validate_data):
-        return User.objects.create(**validate_data)
-
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    password = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = ['username','email','password']
+        fields = ('url', 'username','password' ,'email')
+    def create(self,validated_data):
+        user = super(UserSerializer,self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('url', 'name')
