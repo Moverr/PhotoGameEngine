@@ -1,12 +1,20 @@
-import datetime
-import hashlib
+from django.db import models
 import re
+import hashlib
+import datetime
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.contrib.auth.tokens import default_token_generator
 from django.db import models, transaction
+from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils import timezone
+from django.contrib.auth.tokens import default_token_generator
+
+from base import utils as base_utils
+from base import models as base_models
 
 User = get_user_model()
 
@@ -16,7 +24,12 @@ SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
 class Verification(models.Model):
-   
+    """
+    An abstract model that provides fields related to user
+    verification.
+
+    """
+
     has_email_verified = models.BooleanField(
         default=False
     )
@@ -36,7 +49,7 @@ class UserProfileRegistrationManager(models.Manager):
     """
 
     @transaction.atomic
-    def create_user_profile(self, data, is_active=False, site=None, send_email=True):
+    def create_user_profile(self, data, is_active=True):
         """
         Create a new user and its associated ``UserProfile``.
         Also, send user account activation (verification) email.
@@ -48,7 +61,11 @@ class UserProfileRegistrationManager(models.Manager):
         user.is_active = is_active
         user.set_password(password)
         user.save()
-      
+
+        user_profile = self.create_profile(user)
+
+       
+
         return user
 
     def create_profile(self, user):
@@ -68,7 +85,7 @@ class UserProfileRegistrationManager(models.Manager):
         )
 
         return profile
- 
+
     @transaction.atomic
     def delete_expired_users(self):
         """

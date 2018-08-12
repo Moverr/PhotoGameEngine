@@ -69,8 +69,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         is_active = True
         user = UserProfile.objects.create_user_profile(
                 data=user_data,
-                is_active=is_active,
-                site=get_current_site(self.context['request']),
-                send_email=True
+                is_active=is_active            
             )
         return validated_data
