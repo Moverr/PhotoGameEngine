@@ -6,8 +6,8 @@ from django.db import models
 
  
 VOTE_CHOICE = (
-    ("UPVOTE", 1),
-    ("DOWNVOTE", 2), 
+    (1,"UPVOTE"),
+    (2,"DOWNVOTE"), 
     )
 
 PHOTO_CATEGORY = (
@@ -28,10 +28,19 @@ class Picture(models.Model):
     owner = models.ForeignKey('auth.User',related_name='pictures',on_delete=models.CASCADE)
     datecreated = models.DateTimeField(auto_now_add=True,blank=True)
 
-class votes(models.Model):
+class Votes(models.Model):
     picture = models.ForeignKey(Picture,on_delete=models.CASCADE)
     voter = models.ForeignKey('auth.User',related_name='voters',on_delete=models.CASCADE)
     count = models.IntegerField()   
     status = models.CharField(choices=VOTE_CHOICE, max_length=100)
+    datecreated = models.DateTimeField(auto_now_add=True,blank=True)
+
+class Views(models.Model):
+    picture = models.ForeignKey(Picture,on_delete=models.CASCADE)
+    voter = models.ForeignKey('auth.User',related_name='voters',on_delete=models.CASCADE)
+    count = models.IntegerField()   
+    datecreated = models.DateTimeField(auto_now_add=True,blank=True)
+    
+    
 
 

@@ -3,31 +3,15 @@ from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import viewsets
-from photogame.models import Picture, votes
+from photogame.models import Picture, Votes,Views
 
 from .serializers import PictureSerializer, VoteSerializer
 from rest_framework.views import APIView
-
-
-# class PictureViewSet(APIView):   
-#     def get(self,request,format=None):
-#         pictures = Picture.objects.all()
-#         serializer = PictureSerializer(pictures)
-#         return Response(serializer.data)
-    
-       
-# class VoteViewSet(APIView):
-#     def get(self,request,format=None):
-#         pictures = votes.objects.all()
-#         serializer = VoteSerializer(pictures)
-#         return Response(serializer.data)   
-     
-
-
+ 
 
 class PictureViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that manages picture information 
     """
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer
@@ -35,8 +19,16 @@ class PictureViewSet(viewsets.ModelViewSet):
 
 class VoteViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint  that manages picture voting 
     """
-    queryset = votes.objects.all()
+    queryset = Votes.objects.all()
+    serializer_class = VoteSerializer
+
+
+class ViewsViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint  that manages picture views .
+    """
+    queryset = Views.objects.all()
     serializer_class = VoteSerializer
 

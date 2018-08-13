@@ -5,6 +5,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'pictures', views.PictureViewSet)
 router.register(r'votes', views.VoteViewSet)
+router.register(r'views', views.ViewsViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

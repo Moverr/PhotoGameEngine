@@ -1,10 +1,8 @@
-from  photogame.models import Picture,votes
-from photogame.utils.enums import Categories,VoteStatus
+from  photogame.models import Picture,Votes,Views
 from rest_framework import serializers
 
 
-class PictureSerializer(serializers.HyperlinkedModelSerializer):
-    
+class PictureSerializer(serializers.HyperlinkedModelSerializer):    
     class Meta:
         model = Picture
         fields = ('id','file','caption' ,'description','category','owner','datecreated')
@@ -12,13 +10,12 @@ class PictureSerializer(serializers.HyperlinkedModelSerializer):
 
 class VoteSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = votes
-        fields = ('id', 'picture','voter','count','status')
+        model = Votes
+        fields = ('id', 'picture','voter','count','status','datecreated')
 
-class CategoriesSerializer(serializers.HyperlinkedModelSerializer):
+class ViewsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Categories
+        model = Views
+        fields = ('id', 'picture','voter','count','datecreated')
 
-class VoteStatusSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = VoteStatus
+ 
