@@ -1,4 +1,4 @@
-from  photogame.models import Picture,Votes,Views
+from  photogame.models import Picture,PictureVotes,PictureViews
 from rest_framework import serializers
 
 
@@ -10,12 +10,12 @@ class PictureSerializer(serializers.HyperlinkedModelSerializer):
 
 class VoteSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Votes
+        model = PictureVotes
         fields = ('id', 'picture','voter','count','status','datecreated')
 
 class ViewsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Views
-        fields = ('id', 'picture','voter','count','datecreated')
+        model = PictureViews
+        fields = ('id', 'picture','viewer','count','datecreated')
 
  

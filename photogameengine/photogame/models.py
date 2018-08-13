@@ -28,16 +28,16 @@ class Picture(models.Model):
     owner = models.ForeignKey('auth.User',related_name='pictures',on_delete=models.CASCADE)
     datecreated = models.DateTimeField(auto_now_add=True,blank=True)
 
-class Votes(models.Model):
+class PictureVotes(models.Model):
     picture = models.ForeignKey(Picture,on_delete=models.CASCADE)
     voter = models.ForeignKey('auth.User',related_name='voters',on_delete=models.CASCADE)
     count = models.IntegerField()   
     status = models.CharField(choices=VOTE_CHOICE, max_length=100)
     datecreated = models.DateTimeField(auto_now_add=True,blank=True)
 
-class Views(models.Model):
+class PictureViews(models.Model):
     picture = models.ForeignKey(Picture,on_delete=models.CASCADE)
-    voter = models.ForeignKey('auth.User',related_name='voters',on_delete=models.CASCADE)
+    viewer = models.ForeignKey('auth.User',related_name='viewer',on_delete=models.CASCADE)
     count = models.IntegerField()   
     datecreated = models.DateTimeField(auto_now_add=True,blank=True)
     
